@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup - ChocoDream</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script>if(localStorage.getItem('chocodream_user_cache')){document.documentElement.classList.add('has-user');}</script>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+           <div class="nav-left">
+    <a href="index.html" class="logo">
+        <span class="logo-icon">🍫</span>
+        <span class="brand-name">ChocoDream</span>
+    </a>
+</div>
+
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+           
+        </div>
+    </nav>
+    <script src="js/auth-check.js"></script>
+
+    <main>
+        <section class="auth-section">
+            <div class="container">
+                <div class="auth-container">
+                    <div class="auth-tabs">
+                        <button class="tab-btn active" id="loginTab">Login</button>
+                        <button class="tab-btn" id="signupTab">Sign Up</button>
+                    </div>
+
+                    <div class="tab-content active" id="loginContent">
+                        <form id="loginForm" class="auth-form">
+                            <h2>Welcome Back</h2>
+                            <p class="form-subtitle">Login to your account</p>
+
+                            <div class="form-group">
+                                <label for="loginEmail">Email</label>
+                                <input type="email" id="loginEmail" name="email" placeholder="Enter your email">
+                                <span class="error-message" id="loginEmailError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="loginPassword">Password</label>
+                                <input type="password" id="loginPassword" name="password" placeholder="Enter your password">
+                                <span class="error-message" id="loginPasswordError"></span>
+                            </div>
+
+                            <button type="submit" class="submit-btn">Login</button>
+                        </form>
+                    </div>
+
+                    <div class="tab-content" id="signupContent">
+                        <form id="signupForm" class="auth-form">
+                            <h2>Create Account</h2>
+                            <p class="form-subtitle">Sign up for a new account</p>
+
+                            <div class="form-group">
+                                <label for="signupName">Username</label>
+                                <input type="text" id="signupName" name="name" placeholder="Enter your username">
+                                <span class="error-message" id="signupNameError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="signupEmail">Email</label>
+                                <input type="email" id="signupEmail" name="email" placeholder="Enter your email">
+                                <span class="error-message" id="signupEmailError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="signupPassword">Password</label>
+                                <input type="password" id="signupPassword" name="password" placeholder="Create a password">
+                                <span class="error-message" id="signupPasswordError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password">
+                                <span class="error-message" id="confirmPasswordError"></span>
+                            </div>
+
+                            <button type="submit" class="submit-btn">Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Shopping Cart</h2>
+                <button class="close-cart" id="closeCart">&times;</button>
+            </div>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cartTotal">₹0</span>
+                </div>
+                <button class="checkout-btn">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+<style>
+.footer {
+    background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+    color: #f5e6d3;
+    padding: 60px 0 20px;
+    margin-top: 80px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-section h3 {
+    color: #d4a574;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.footer-section h4 {
+    color: #d4a574;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.footer-section p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #f5e6d3;
+}
+
+.footer-contact p {
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.footer-section a {
+    display: block;
+    color: #f5e6d3;
+    text-decoration: none;
+    margin: 10px 0;
+    transition: color 0.3s;
+}
+
+.footer-section a:hover {
+    color: #d4a574;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(212, 165, 116, 0.1);
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.social-links a:hover {
+    background: #d4a574;
+    color: #1a0f0a;
+    transform: translateY(-3px);
+}
+
+.social-links svg {
+    width: 20px;
+    height: 20px;
+}
+
+.newsletter {
+    margin-top: 20px;
+}
+
+.newsletter h4 {
+    margin-bottom: 10px;
+}
+
+.newsletter p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.newsletter-form {
+    display: flex;
+    margin-top: 15px;
+}
+
+.newsletter-form input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #d4a574;
+    background: rgba(255, 255, 255, 0.05);
+    color: #f5e6d3;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+
+.newsletter-form input::placeholder {
+    color: rgba(245, 230, 211, 0.5);
+}
+
+.newsletter-form button {
+    padding: 10px 20px;
+    background: #d4a574;
+    color: #1a0f0a;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.newsletter-form button:hover {
+    background: #c89961;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(212, 165, 116, 0.3);
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+.payment-methods {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.payment-methods span {
+    font-size: 14px;
+    color: #d4a574;
+    font-weight: 600;
+}
+
+.payment-icons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.payment-icons svg {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    transition: transform 0.3s;
+}
+
+.payment-icons svg:hover {
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .payment-methods {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .payment-icons {
+        justify-content: center;
+    }
+}
+</style>
+
+
+
+    <div class="toast" id="toast"></div>
+
+    <!-- At the end of body, before closing </body> tag -->
+<!-- Firebase SDKs (v8 compat) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<!-- Initialize Firebase (replace config in js/firebase-app.js) -->
+<script src="js/firebase-app.js"></script>
+<!-- Auth handlers that connect forms to Firebase -->
+<script src="js/firebase-auth.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/validation.js"></script>
+<script src="js/main.js"></script>
+<script type="module" src="js/checkout.js"></script>
+
+</body>
+</html>

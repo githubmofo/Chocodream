@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - ChocoDream</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script>if(localStorage.getItem('chocodream_user_cache')){document.documentElement.classList.add('has-user');}</script>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+<div class="nav-left">
+    <a href="index.html" class="logo">
+        <span class="logo-icon">🍫</span>
+        <span class="brand-name">ChocoDream</span>
+    </a>
+</div>
+
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="nav-center" id="navMenu">
+                <a href="products.html">Products</a>
+                <a href="about.html">About</a>
+                <a href="contact.html" class="active">Contact</a>
+            </div>
+            <div class="nav-right">
+                <a href="login.html" class="login-btn">Login/Signup</a>
+                <div class="cart-icon" id="cartIcon">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <script src="js/auth-check.js"></script>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Contact Us</h1>
+                <p>We'd love to hear from you</p>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h2>Get in Touch</h2>
+                        <p>Have questions about our chocolates? We're here to help!</p>
+                        
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">📧</div>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>deadpool47181@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">📞</div>
+                                <div>
+                                    <h4>Phone</h4>
+                                    <p>+91 98765 43210</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">📍</div>
+                                <div>
+                                    <h4>Address</h4>
+                                    <p>123 Chocolate Lane, Sweet City, India</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-container">
+                        <form id="contactForm" class="contact-form">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" placeholder="Enter your name">
+                                <span class="error-message" id="nameError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="Enter your email">
+                                <span class="error-message" id="emailError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+                                <span class="error-message" id="phoneError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" placeholder="Enter your message"></textarea>
+                                <span class="error-message" id="messageError"></span>
+                            </div>
+
+                            <button type="submit" class="submit-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Shopping Cart</h2>
+                <button class="close-cart" id="closeCart">&times;</button>
+            </div>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cartTotal">₹0</span>
+                </div>
+                <button class="checkout-btn">Checkout</button>
+            </div>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ChocoDream</h3>
+                <p>Premium handcrafted chocolates for every occasion</p>
+                <div class="footer-contact">
+                    <p>📧 deadpool47181@gmail.com</p>
+                    <p>📞 +91 98765 43210</p>
+                    <p>📍 Vapi, Gujarat, India</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="products.html">Products</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+                <a href="faq.html">FAQs</a>
+                <a href="shipping.html">Shipping & Returns</a>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Service</h4>
+                <a href="track-order.html">Track Order</a>
+                <a href="my-account.html">My Account</a>
+                <a href="terms.html">Terms & Conditions</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <!-- icons unchanged -->
+                    <a href="https://instagram.com/chocodream" target="_blank" aria-label="Instagram">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/chocodream" target="_blank" aria-label="Twitter">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com/company/chocodream" target="_blank" aria-label="LinkedIn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="newsletter">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe for exclusive offers</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 ChocoDream. All rights reserved.</p>
+            <div class="payment-methods">
+                <span>We Accept:</span>
+                <div class="payment-icons">
+                    <!-- existing SVG icons kept as-is -->
+                    <!-- Visa -->
+                    <svg width="50" height="32" viewBox="0 0 50 32" fill="none">
+                        <rect width="50" height="32" rx="4" fill="white"/>
+                        <path d="M20.5 10h-3.7l-2.3 12h3.7l2.3-12zm8.9 7.7l2-5.4.9 5.4h-2.9zm4.1 4.3h3.4l-2.9-12h-3.1c-.7 0-1.3.4-1.5 1l-5.3 11h3.9l.8-2.1h4.7zm-11.2-4.6c0-3.2-4.4-3.4-4.4-4.8 0-.4.4-.9 1.3-.9 1.2 0 2.6.4 3.4.9l.6-2.9c-.9-.3-2-.6-3.4-.6-3.6 0-6.1 1.9-6.1 4.6 0 2 1.8 3.1 3.1 3.8 1.4.7 1.9 1.1 1.9 1.7 0 .9-1.1 1.3-2.1 1.3-1.8 0-2.7-.5-3.5-.9l-.6 3c.8.4 2.3.7 3.8.7 3.8.1 6.2-1.8 6.2-4.9z" fill="#1434CB"/>
+                    </svg>
+                    <!-- Mastercard -->
+                    <svg width="50" height="32" viewBox="0 0 50 32" fill="none">
+                        <rect width="50" height="32" rx="4" fill="white"/>
+                        <circle cx="19" cy="16" r="9" fill="#EB001B"/>
+                        <circle cx="31" cy="16" r="9" fill="#F79E1B"/>
+                        <path d="M25 9.5c-1.7 1.5-2.8 3.7-2.8 6.2s1.1 4.7 2.8 6.2c1.7-1.5 2.8-3.7 2.8-6.2s-1.1-4.7-2.8-6.2z" fill="#FF5F00"/>
+                    </svg>
+                    <!-- RuPay -->
+                    <svg width="50" height="32" viewBox="0 0 50 32" fill="none">
+                        <rect width="50" height="32" rx="4" fill="white"/>
+                        <path d="M12 12h4c1.7 0 3 1.3 3 3s-1.3 3-3 3h-2v2h-2v-8zm2 4h2c.6 0 1-.4 1-1s-.4-1-1-1h-2v2z" fill="#097939"/>
+                        <path d="M22 18v4h-2v-10h2v4l3-4h2.5l-3.5 4.5 4 5.5H26l-3-4z" fill="#523080"/>
+                        <path d="M30 12v10h-2v-10h2z" fill="#C8102E"/>
+                    </svg>
+                    <!-- UPI -->
+                    <svg width="50" height="32" viewBox="0 0 50 32" fill="none">
+                        <rect width="50" height="32" rx="4" fill="#097939"/>
+                        <text x="50%" y="50%" text-anchor="middle" dy=".35em" fill="white" font-family="Arial" font-size="12" font-weight="bold">UPI</text>
+                    </svg>
+                    <!-- PayPal -->
+                    <svg width="50" height="32" viewBox="0 0 50 32" fill="none">
+                        <rect width="50" height="32" rx="4" fill="white"/>
+                        <path d="M19.5 9c2.8 0 4.5 1.4 4.5 3.8 0 2.8-2 4.7-4.9 4.7h-1.4l-.7 3.5h-2.2L16.2 9h3.3zm-.8 6.5c1.4 0 2.4-.9 2.4-2.3 0-1-.6-1.7-1.8-1.7h-1.2l-.8 4h1.4z" fill="#003087"/>
+                        <path d="M28.5 9c2.8 0 4.5 1.4 4.5 3.8 0 2.8-2 4.7-4.9 4.7h-1.4l-.7 3.5h-2.2L25.2 9h3.3zm-.8 6.5c1.4 0 2.4-.9 2.4-2.3 0-1-.6-1.7-1.8-1.7h-1.2l-.8 4h1.4z" fill="#009CDE"/>
+                    </svg>
+                    <!-- Google Pay -->
+                    <svg width="50" height="32" viewBox="0 0 50 32" fill="none">
+                        <rect width="50" height="32" rx="4" fill="white"/>
+                        <text x="50%" y="50%" text-anchor="middle" dy=".35em" fill="#5F6368" font-family="Arial" font-size="10" font-weight="bold">GPay</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+    <div class="toast" id="toast"></div>
+<!-- At the end of body, before closing </body> tag -->
+<!-- Firebase SDKs (v8 compat) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<!-- Initialize Firebase -->
+<script src="js/firebase-app.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/validation.js"></script>
+<script src="js/main.js"></script>
+<script type="module">
+// Override contact form submission to save to Firebase
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        // Validate form (basic validation)
+        let isValid = true;
+
+        if (name.length < 3) {
+            showError('nameError', 'Name must be at least 3 characters long');
+            isValid = false;
+        } else {
+            clearError('nameError');
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+            showError('emailError', 'Please enter a valid email address');
+            isValid = false;
+        } else {
+            clearError('emailError');
+        }
+
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phone || !phoneRegex.test(phone)) {
+            showError('phoneError', 'Phone number must be 10 digits');
+            isValid = false;
+        } else {
+            clearError('phoneError');
+        }
+
+        if (message.length < 10) {
+            showError('messageError', 'Message must be at least 10 characters long');
+            isValid = false;
+        } else {
+            clearError('messageError');
+        }
+
+        if (!isValid) {
+            showToast('Please fill all fields correctly');
+            return;
+        }
+
+        // Save to Firebase
+        try {
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Sending...';
+
+            // The following lines were removed as per the edit hint:
+            // import { saveContactMessage } from './js/firebase-app.js';
+            // await saveContactMessage({
+            //     name: name,
+            //     email: email,
+            //     phone: phone,
+            //     message: message
+            // });
+
+            showToast('Message sent successfully! We will get back to you soon.');
+            contactForm.reset();
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        } catch (error) {
+            console.error('Error saving message:', error);
+            showToast('Failed to send message. Please try again later.');
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Send Message';
+        }
+    });
+}
+
+// Helper functions for error display
+function showError(elementId, message) {
+    const errorElement = document.getElementById(elementId);
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.color = '#d32f2f';
+    }
+}
+
+function clearError(elementId) {
+    const errorElement = document.getElementById(elementId);
+    if (errorElement) {
+        errorElement.textContent = '';
+    }
+}
+
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    if (toast) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+}
+</script>
+
+</body>
+</html>
