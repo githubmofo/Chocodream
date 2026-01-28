@@ -82,6 +82,8 @@
                     uid: user.uid,
                     timestamp: Date.now()
                   }));
+                  // Trigger custom event for auth-check.js
+                  document.dispatchEvent(new Event('userLoggedIn'));
                 } catch (e) {
                   console.warn('Failed to cache user:', e);
                 }
@@ -187,6 +189,8 @@
                 uid: user.uid,
                 timestamp: Date.now()
               }));
+              // Trigger custom event for auth-check.js
+              document.dispatchEvent(new Event('userLoggedIn'));
             } catch (e) {
               console.warn('Failed to cache user:', e);
             }

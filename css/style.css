@@ -574,21 +574,21 @@ video {
     justify-content: center;
     width: 30px;
     height: 30px;
-    transform: rotate(90deg);
+    transform: rotate(0deg);
     box-shadow: 0 1px 3px rgba(93, 64, 55, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .dropdown-arrow:hover {
     background: transparent;
     border: none;
-    transform: rotate(90deg) translateY(-1px);
+    transform: rotate(0deg) translateY(-1px);
     box-shadow: 0 2px 6px rgba(93, 64, 55, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .user-profile-card.dropdown-open .dropdown-arrow {
     background: transparent;
     border: none;
-    transform: rotate(-90deg);
+    transform: rotate(180deg);
     box-shadow: 0 2px 8px rgba(93, 64, 55, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
@@ -2047,7 +2047,7 @@ video {
     .nav-container {
         padding: 0.75rem 1rem;
         gap: 0.5rem;
-        overflow: hidden;
+        overflow: visible;
     }
 
     .logo-icon {
@@ -2060,18 +2060,44 @@ video {
     }
 
     .user-profile-card {
-        padding: 0;
+        padding: 0.5rem 0.75rem;
         background: transparent;
         border: none;
         box-shadow: none;
-        gap: 0;
+        gap: 0.5rem;
         margin: 0;
         position: relative;
+        display: flex;
+        align-items: center;
     }
 
-    .user-info,
+    .user-info {
+        display: flex !important;
+        flex-direction: column;
+        gap: 0;
+        min-width: auto;
+    }
+
+    .user-name {
+        font-size: 0.8rem !important;
+        max-width: 70px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     .dropdown-arrow {
-        display: none !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        color: var(--primary-brown);
+        padding: 4px;
+        margin-left: 2px;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
     }
 
     .user-avatar {
@@ -2079,6 +2105,7 @@ video {
         height: 32px;
         font-size: 0.7rem;
         cursor: pointer;
+        flex-shrink: 0;
     }
 
     /* Mobile-specific logout dropdown */
@@ -2092,11 +2119,18 @@ video {
         padding: 0.5rem;
         min-width: 120px;
         z-index: 1000;
-        display: none;
+        display: none !important;
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.95) translateY(-5px);
+        transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
     }
 
     .user-profile-card.mobile-dropdown-open .dropdown-menu {
-        display: block;
+        display: block !important;
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1) translateY(0);
     }
 
     .user-profile-card .dropdown-menu .dropdown-item {
@@ -2116,8 +2150,19 @@ video {
         background: rgba(212, 165, 116, 0.1);
     }
 
+    .user-profile-card.mobile-dropdown-open .dropdown-arrow {
+        transform: rotate(180deg);
+    }
+
     .cart-icon {
         font-size: 1.5rem;
+    }
+
+    .login-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        border-radius: 8px;
     }
 
     .cart-count {
