@@ -293,11 +293,15 @@ document.addEventListener('DOMContentLoaded', function () {
         let html = '';
         for (let id in cart) {
             const item = cart[id];
+            const type = item.type || (item.category ? item.category.split(' ')[0] : '');
             html += `
                 <div class="cart-item" data-id="${id}">
+                    <div class="item-image" data-type="${type}">
+                        ${item.image ? `<img src="${item.image}" alt="${item.name}">` : ''}
+                    </div>
                     <div class="item-details">
                         <span class="item-name">${item.name}</span>
-                        <span class="item-price">${item.price}</span>
+                        <span class="item-price">$${item.price}</span>
                         <span class="item-qty">Qty: ${item.quantity}</span>
                         <div class="item-actions">
                             <button type="button" class="remove-btn">Remove</button>
@@ -326,8 +330,12 @@ document.addEventListener('DOMContentLoaded', function () {
         let html = '';
         for (let id in savedForLater) {
             const item = savedForLater[id];
+            const type = item.type || (item.category ? item.category.split(' ')[0] : '');
             html += `
                 <div class="cart-item" data-id="${id}">
+                    <div class="item-image" data-type="${type}">
+                        ${item.image ? `<img src="${item.image}" alt="${item.name}">` : ''}
+                    </div>
                     <div class="item-details">
                         <span class="item-name">${item.name}</span>
                         <span class="item-price">$${item.price}</span>
