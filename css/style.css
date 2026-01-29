@@ -2083,10 +2083,7 @@ video {
     }
 
     .user-info {
-        display: flex !important;
-        flex-direction: column;
-        gap: 0;
-        min-width: auto;
+        display: none !important;
     }
 
     .user-name {

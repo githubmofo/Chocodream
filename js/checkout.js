@@ -1,28 +1,43 @@
 // Checkout flow: collects user details, saves order to Firebase Realtime DB, clears cart
 
+async function saveOrder(orderData) {
+    if (typeof firebase === 'undefined' || !firebase.database) {
+        console.error('Firebase Database not initialized');
+        throw new Error('Database connection failed');
+    }
+
+    const ordersRef = firebase.database().ref('orders');
+    const key = orderData.orderId || ordersRef.push().key;
+
+    return ordersRef.child(key).set({
+        ...orderData,
+        createdAt: firebase.database.ServerValue.TIMESTAMP
+    });
+}
+
 // Make saveOrder available globally for checkout.html inline script
 window.saveOrderToFirebase = saveOrder;
 
 function getCart() {
-  try { return JSON.parse(localStorage.getItem('chocodream_cart') || '{}'); } catch { return {}; }
+    try { return JSON.parse(localStorage.getItem('chocodream_cart') || '{}'); } catch { return {}; }
 }
 
 function getCartItemsArray() {
-  const cart = getCart();
-  return Object.values(cart || {}).map(it => ({ id: it.id, name: it.name, price: it.price, quantity: it.quantity || 1, image: it.image, type: it.type }));
+    const cart = getCart();
+    return Object.values(cart || {}).map(it => ({ id: it.id, name: it.name, price: it.price, quantity: it.quantity || 1, image: it.image, type: it.type }));
 }
 
 function computeTotal(items) {
-  return items.reduce((sum, it) => sum + (Number(it.price) || 0) * (Number(it.quantity) || 1), 0);
+    return items.reduce((sum, it) => sum + (Number(it.price) || 0) * (Number(it.quantity) || 1), 0);
 }
 
 function createModal() {
-  let modal = document.getElementById('orderModal');
-  if (modal) return modal;
-  modal = document.createElement('div');
-  modal.id = 'orderModal';
-  modal.className = 'modal active';
-  modal.innerHTML = `
+    let modal = document.getElementById('orderModal');
+    if (modal) return modal;
+    modal = document.createElement('div');
+    modal.id = 'orderModal';
+    modal.className = 'modal active';
+    modal.innerHTML = `
     <div class="modal-card" style="grid-template-columns:1fr; max-width:620px;">
       <button class="close" id="orderModalClose">×</button>
       <div class="modal-body">
@@ -37,111 +52,111 @@ function createModal() {
         </form>
       </div>
     </div>`;
-  document.body.appendChild(modal);
-  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-  document.getElementById('orderModalClose').addEventListener('click', closeModal);
-  return modal;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.getElementById('orderModalClose').addEventListener('click', closeModal);
+    return modal;
 }
 
 function closeModal() {
-  const m = document.getElementById('orderModal');
-  if (m) m.classList.remove('active');
+    const m = document.getElementById('orderModal');
+    if (m) m.classList.remove('active');
 }
 
 function toast(msg) {
-  let t = document.getElementById('toast');
-  if (!t) { t = document.createElement('div'); t.id='toast'; t.className='toast'; document.body.appendChild(t); }
-  t.textContent = msg; t.classList.add('show'); setTimeout(()=> t.classList.remove('show'), 1800);
+    let t = document.getElementById('toast');
+    if (!t) { t = document.createElement('div'); t.id = 'toast'; t.className = 'toast'; document.body.appendChild(t); }
+    t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 1800);
 }
 
 function isUserLoggedIn() {
-  // Check Firebase auth if available
-  if (typeof firebase !== 'undefined' && firebase.auth) {
-    const user = firebase.auth().currentUser;
-    if (user) return true;
-  }
-  // Check cache
-  try {
-    const cached = localStorage.getItem('chocodream_user_cache');
-    if (cached) {
-      const data = JSON.parse(cached);
-      // Cache is valid for 24 hours
-      if (Date.now() - data.timestamp < 24 * 60 * 60 * 1000) {
-        return true;
-      }
+    // Check Firebase auth if available
+    if (typeof firebase !== 'undefined' && firebase.auth) {
+        const user = firebase.auth().currentUser;
+        if (user) return true;
     }
-  } catch (e) {
-    // Ignore cache errors
-  }
-  return false;
+    // Check cache
+    try {
+        const cached = localStorage.getItem('chocodream_user_cache');
+        if (cached) {
+            const data = JSON.parse(cached);
+            // Cache is valid for 24 hours
+            if (Date.now() - data.timestamp < 24 * 60 * 60 * 1000) {
+                return true;
+            }
+        }
+    } catch (e) {
+        // Ignore cache errors
+    }
+    return false;
 }
 
 async function handleCheckoutClick() {
-  const items = getCartItemsArray();
-  if (!items.length) { toast('Your cart is empty'); return; }
-  
-  // Check if user is logged in
-  if (!isUserLoggedIn()) {
-    alert('Please Sign in before Checking out your order');
-    window.location.href = 'login.html';
-    return;
-  }
-  
-  const modal = createModal();
-  const user = typeof firebase !== 'undefined' && firebase.auth ? firebase.auth().currentUser : null;
-  if (user) {
-    const emailEl = modal.querySelector('#orderEmail');
-    if (emailEl) emailEl.value = user.email || '';
-    const nameEl = modal.querySelector('#orderName');
-    if (nameEl) nameEl.value = user.displayName || '';
-  }
-  modal.classList.add('active');
-  const form = modal.querySelector('#orderForm');
-  form.onsubmit = async (e) => {
-    e.preventDefault();
-    
-    // Check if user is still logged in before submitting
+    const items = getCartItemsArray();
+    if (!items.length) { toast('Your cart is empty'); return; }
+
+    // Check if user is logged in
     if (!isUserLoggedIn()) {
-      alert('Please Sign in before Checking out your order');
-      closeModal();
-      window.location.href = 'login.html';
-      return;
+        alert('Please Sign in before Checking out your order');
+        window.location.href = 'login.html';
+        return;
     }
-    
-    const name = modal.querySelector('#orderName').value.trim();
-    const email = modal.querySelector('#orderEmail').value.trim();
-    const phone = modal.querySelector('#orderPhone').value.trim();
-    const address = modal.querySelector('#orderAddress').value.trim();
-    const total = computeTotal(items);
-    const orderId = 'OD' + Date.now();
-    try {
-      await saveOrder({ orderId, name, email, phone, address, total, items });
-      localStorage.removeItem('chocodream_cart');
-      const cartCountEl = document.getElementById('cartCount'); if (cartCountEl) cartCountEl.textContent = '0';
-      toast('Order placed successfully');
-      closeModal();
-    } catch (err) {
-      console.error(err);
-      toast('Failed to save order');
+
+    const modal = createModal();
+    const user = typeof firebase !== 'undefined' && firebase.auth ? firebase.auth().currentUser : null;
+    if (user) {
+        const emailEl = modal.querySelector('#orderEmail');
+        if (emailEl) emailEl.value = user.email || '';
+        const nameEl = modal.querySelector('#orderName');
+        if (nameEl) nameEl.value = user.displayName || '';
     }
-  };
+    modal.classList.add('active');
+    const form = modal.querySelector('#orderForm');
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+
+        // Check if user is still logged in before submitting
+        if (!isUserLoggedIn()) {
+            alert('Please Sign in before Checking out your order');
+            closeModal();
+            window.location.href = 'login.html';
+            return;
+        }
+
+        const name = modal.querySelector('#orderName').value.trim();
+        const email = modal.querySelector('#orderEmail').value.trim();
+        const phone = modal.querySelector('#orderPhone').value.trim();
+        const address = modal.querySelector('#orderAddress').value.trim();
+        const total = computeTotal(items);
+        const orderId = 'OD' + Date.now();
+        try {
+            await saveOrder({ orderId, name, email, phone, address, total, items });
+            localStorage.removeItem('chocodream_cart');
+            const cartCountEl = document.getElementById('cartCount'); if (cartCountEl) cartCountEl.textContent = '0';
+            toast('Order placed successfully');
+            closeModal();
+        } catch (err) {
+            console.error(err);
+            toast('Failed to save order');
+        }
+    };
 }
 
 export function attachCheckoutHandler() {
-  document.querySelectorAll('.checkout-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      handleCheckoutClick();
+    document.querySelectorAll('.checkout-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleCheckoutClick();
+        });
     });
-  });
 }
 
 // Auto-attach when module is loaded
 attachCheckoutHandler();
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     console.log('Checkout page loaded');
-    
+
     let cart = JSON.parse(localStorage.getItem('chocodream_cart')) || {};
     let savedForLater = JSON.parse(localStorage.getItem('chocodream_saved_later')) || {};
     let orderData = {};
@@ -263,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function displayCheckoutItems() {
         console.log('displayCheckoutItems called');
         const checkoutItems = document.getElementById('checkoutItems');
-        
+
         if (!checkoutItems) {
             console.error('checkoutItems element not found!');
             return;
@@ -461,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Form submission
-    document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+    document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const formData = new FormData(e.target);
@@ -531,7 +546,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const totals = calculateTotals();
         const orderNumber = 'CD' + Date.now();
         const orderId = 'ORD' + Date.now();
-        
+
         orderData = {
             orderId: orderId,
             orderNumber: orderNumber,
@@ -604,7 +619,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Enrich cart with images from products.json if missing, then initialize UI
-    (async function enrichAndInit(){
+    (async function enrichAndInit() {
         try {
             const needsImage = Object.values(cart).some(it => !it.image && !it.imgSrc);
             if (needsImage) {
@@ -613,12 +628,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     const catalog = await res.json();
                     const byId = new Map();
                     const byName = new Map();
-                    catalog.forEach(p => { byId.set(String(p.id), p); byName.set((p.name||'').toLowerCase(), p); });
+                    catalog.forEach(p => { byId.set(String(p.id), p); byName.set((p.name || '').toLowerCase(), p); });
                     for (const key in cart) {
                         if (!cart.hasOwnProperty(key)) continue;
                         const it = cart[key];
                         if (it && !it.image && !it.imgSrc) {
-                            const p = byId.get(String(it.id)) || byName.get((it.name||'').toLowerCase());
+                            const p = byId.get(String(it.id)) || byName.get((it.name || '').toLowerCase());
                             if (p && p.image) {
                                 cart[key].image = p.image;
                             }
