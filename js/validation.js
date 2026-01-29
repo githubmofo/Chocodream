@@ -53,72 +53,48 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Login Form Logic
+    // Login Form Validation (UI feedback only, Firebase handles submission)
     if (loginForm) {
-        loginForm.addEventListener('submit', function (e) {
-            e.preventDefault();
+        loginForm.addEventListener('input', function (e) {
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value.trim();
-            let isValid = true;
 
-            if (!validateEmail(email)) { showError('loginEmailError', 'Valid email required'); isValid = false; }
-            else { clearError('loginEmailError'); }
+            if (email && !validateEmail(email)) {
+                showError('loginEmailError', 'Valid email required');
+            } else {
+                clearError('loginEmailError');
+            }
 
-            if (password.length < 8) { showError('loginPasswordError', '8+ characters required'); isValid = false; }
-            else { clearError('loginPasswordError'); }
-
-            if (isValid) {
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                const user = users.find(u => u.email === email && u.password === password);
-                if (user) {
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    if (typeof showToast === 'function') showToast('Login successful!');
-                    setTimeout(() => { window.location.href = 'index.html'; }, 1000);
-                } else {
-                    showError('loginPasswordError', 'Invalid credentials');
-                }
+            if (password && password.length < 8) {
+                showError('loginPasswordError', '8+ characters required');
+            } else {
+                clearError('loginPasswordError');
             }
         });
     }
 
-    // Signup Form Logic
+    // Signup Form Validation (UI feedback only, Firebase handles submission)
     if (signupForm) {
-        signupForm.addEventListener('submit', function (e) {
-            e.preventDefault();
+        signupForm.addEventListener('input', function (e) {
             const name = document.getElementById('signupName').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
             const password = document.getElementById('signupPassword').value.trim();
             const confirm = document.getElementById('confirmPassword').value.trim();
-            let isValid = true;
 
-            if (name.length < 3) { showError('signupNameError', 'Name too short'); isValid = false; }
-            else { clearError('signupNameError'); }
+            if (name && name.length < 3) showError('signupNameError', 'Name too short');
+            else clearError('signupNameError');
 
-            if (!validateEmail(email)) { showError('signupEmailError', 'Valid email required'); isValid = false; }
-            else {
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                if (users.some(u => u.email === email)) { showError('signupEmailError', 'Already registered'); isValid = false; }
-                else { clearError('signupEmailError'); }
+            if (email && !validateEmail(email)) showError('signupEmailError', 'Valid email required');
+            else clearError('signupEmailError');
+
+            if (password && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password)) {
+                showError('signupPasswordError', 'Need uppercase, lowercase & digit');
+            } else {
+                clearError('signupPasswordError');
             }
 
-            if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password)) {
-                showError('signupPasswordError', 'Need uppercase, lowercase & digit'); isValid = false;
-            } else { clearError('signupPasswordError'); }
-
-            if (password !== confirm) { showError('confirmPasswordError', 'Passwords mismatch'); isValid = false; }
-            else { clearError('confirmPasswordError'); }
-
-            if (isValid) {
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                users.push({ name, email, password });
-                localStorage.setItem('users', JSON.stringify(users));
-                if (typeof showToast === 'function') showToast('Account created!');
-                setTimeout(() => {
-                    const loginTab = document.getElementById('loginTab');
-                    if (loginTab) loginTab.click();
-                    signupForm.reset();
-                }, 1000);
-            }
+            if (confirm && password !== confirm) showError('confirmPasswordError', 'Passwords mismatch');
+            else clearError('confirmPasswordError');
         });
     }
 });

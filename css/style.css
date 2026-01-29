@@ -2064,16 +2064,22 @@ video {
         font-size: 0.95rem;
     }
 
+    @media (max-width: 480px) {
+        .brand-name {
+            font-size: 0.85rem;
+        }
+    }
+
     .user-profile-card {
         padding: 0.5rem 0.75rem;
-        background: transparent;
-        border: none;
-        box-shadow: none;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(44, 20, 10, 0.08);
+        box-shadow: 0 4px 12px rgba(31, 15, 8, 0.08);
         gap: 0.5rem;
         margin: 0;
-        position: relative;
         display: flex;
         align-items: center;
+        border-radius: 12px;
     }
 
     .user-info {
@@ -2083,22 +2089,14 @@ video {
         min-width: auto;
     }
 
-    @media (max-width: 480px) {
-        .user-info {
-            display: none !important;
-        }
-
-        .brand-name {
-            font-size: 0.85rem;
-        }
-    }
-
     .user-name {
-        font-size: 0.75rem !important;
-        max-width: 60px !important;
+        font-size: 0.85rem !important;
+        max-width: 100px !important;
+        color: var(--text-strong) !important;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        display: block !important;
     }
 
     .dropdown-arrow {
