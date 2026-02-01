@@ -52,3 +52,9 @@ chocodream/
 ├── package.json
 ├── README.md
 └── vercel.json             (if custom Vercel config)
+
+Contact / Creator
+
+Built by: JENISH
+Location: Ahmedabad, Gujarat, India
+Live Site: https://chocodream.vercel.app/
