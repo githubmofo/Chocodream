@@ -56,5 +56,7 @@ chocodream/
 Contact / Creator
 
 Built by: JENISH
+
 Location: Ahmedabad, Gujarat, India
+
 Live Site: https://chocodream.vercel.app/
