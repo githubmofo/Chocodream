@@ -1,0 +1,25 @@
+{
+  "name": "chocodream",
+  "version": "1.0.0",
+  "description": "\u0000",
+  "main": "products-shared.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/githubmofo/Chocodream.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/githubmofo/Chocodream/issues"
+  },
+  "homepage": "https://github.com/githubmofo/Chocodream#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "resend": "^6.9.1"
+  }
+}

@@ -596,6 +596,19 @@ document.addEventListener('DOMContentLoaded', function () {
             // Save to Firebase
             await saveOrder(firebaseOrderData);
 
+            // Send email notification via Resend (Serverless Function)
+            try {
+                await fetch('/api/send-order-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(firebaseOrderData)
+                });
+                console.log('Order notification email sent');
+            } catch (emailErr) {
+                console.error('Failed to send email notification:', emailErr);
+                // We don't block the user if email fails, but we log it
+            }
+
             // Also save to localStorage for backward compatibility
             localStorage.setItem('chocodream_latest_order', JSON.stringify(orderData));
             localStorage.removeItem('chocodream_cart');
