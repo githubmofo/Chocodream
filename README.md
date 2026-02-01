@@ -38,3 +38,17 @@ The site highlights indulgence, sustainability, and gifting — perfect for choc
 - **Other possible libraries**: React Router (if multi-page), Framer Motion (subtle animations)
 
 ## Project Structure (typical)
+
+chocodream/
+├── public/                 # static assets, images, favicon
+├── src/
+│   ├── components/         # reusable: Header, Footer, ProductCard, Cart, Button...
+│   ├── pages/              # Home, Products, possibly Cart, Checkout
+│   ├── assets/             # product images, hero banners
+│   ├── context/            # Cart context / global state
+│   ├── styles/             # global CSS or Tailwind config
+│   └── App.jsx / main.jsx
+├── .gitignore
+├── package.json
+├── README.md
+└── vercel.json             (if custom Vercel config)
