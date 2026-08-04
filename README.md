@@ -173,24 +173,6 @@ http://localhost:5173
 
 ---
 
-# 📸 Screenshots
-
-### Home Page
-
-> Add your homepage screenshot here.
-
-### Product Collection
-
-> Add your products page screenshot here.
-
-### Shopping Cart
-
-> Add your cart screenshot here.
-
-### Checkout
-
-> Add your checkout screenshot here.
-
 ---
 
 # 🤝 Contributing
