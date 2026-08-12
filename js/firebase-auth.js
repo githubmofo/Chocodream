@@ -45,6 +45,12 @@
         firebase.auth().signInWithEmailAndPassword(email, password)
           .then(res => {
             const user = res.user;
+            
+            const handleSuccess = () => {
+                showToast('Logged in');
+                setTimeout(() => window.location.href = 'index.html', 700);
+            };
+
             // Fetch user profile and cache it
             if (firebase.database) {
               firebase.database().ref('users/' + user.uid).once('value').then(function (snapshot) {
@@ -78,11 +84,12 @@
                 } catch (e) {
                   console.warn('Failed to cache user:', e);
                 }
+              }).finally(() => {
+                  handleSuccess();
               });
+            } else {
+              handleSuccess();
             }
-            showToast('Logged in');
-            // redirect after a short delay
-            setTimeout(() => window.location.href = 'index.html', 700);
           })
           .catch(err => {
             console.error('Login error', err);

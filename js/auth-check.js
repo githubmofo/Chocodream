@@ -141,6 +141,10 @@
                             const profile = snap.val();
                             const name = (profile && profile.name) || user.displayName || user.email.split('@')[0];
                             updateUI({ uid: user.uid, name: name, email: user.email });
+                        }).catch((err) => {
+                            console.warn("Could not fetch user profile from DB:", err);
+                            const name = user.displayName || user.email.split('@')[0];
+                            updateUI({ uid: user.uid, name: name, email: user.email });
                         });
                     } else {
                         const name = user.displayName || user.email.split('@')[0];
