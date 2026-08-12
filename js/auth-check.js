@@ -106,7 +106,11 @@
 
     function fastAuthRender() {
         const cached = getUserCache();
-        if (cached) updateUI(cached);
+        if (cached) {
+            updateUI(cached);
+        } else {
+            updateUI(null);
+        }
     }
 
     // Run immediately for performance
