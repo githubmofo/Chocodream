@@ -53,40 +53,45 @@
 
             // Fetch user profile and cache it
             if (firebase.database) {
-              firebase.database().ref('users/' + user.uid).once('value').then(function (snapshot) {
-                const profile = snapshot.val();
-                const userName = (profile && profile.name) || user.displayName || (user.email ? user.email.split('@')[0] : '') || 'User';
-                const userEmail = user.email || '';
-                try {
-                  localStorage.setItem('chocodream_user_cache', JSON.stringify({
-                    name: userName,
-                    email: userEmail,
-                    uid: user.uid,
-                    timestamp: Date.now()
-                  }));
-                  // Trigger custom event for auth-check.js
-                  document.dispatchEvent(new Event('userLoggedIn'));
-                } catch (e) {
-                  console.warn('Failed to cache user:', e);
-                }
-              }).catch(function () {
-                // Fallback cache
-                const userName = user.displayName || (user.email ? user.email.split('@')[0] : '') || 'User';
-                try {
-                  localStorage.setItem('chocodream_user_cache', JSON.stringify({
-                    name: userName,
-                    email: user.email || '',
-                    uid: user.uid,
-                    timestamp: Date.now()
-                  }));
-                  // Trigger custom event for auth-check.js
-                  document.dispatchEvent(new Event('userLoggedIn'));
-                } catch (e) {
-                  console.warn('Failed to cache user:', e);
-                }
-              }).finally(() => {
+              try {
+                firebase.database().ref('users/' + user.uid).once('value').then(function (snapshot) {
+                  const profile = snapshot.val();
+                  const userName = (profile && profile.name) || user.displayName || (user.email ? user.email.split('@')[0] : '') || 'User';
+                  const userEmail = user.email || '';
+                  try {
+                    localStorage.setItem('chocodream_user_cache', JSON.stringify({
+                      name: userName,
+                      email: userEmail,
+                      uid: user.uid,
+                      timestamp: Date.now()
+                    }));
+                    // Trigger custom event for auth-check.js
+                    document.dispatchEvent(new Event('userLoggedIn'));
+                  } catch (e) {
+                    console.warn('Failed to cache user:', e);
+                  }
                   handleSuccess();
-              });
+                }).catch(function () {
+                  // Fallback cache
+                  const userName = user.displayName || (user.email ? user.email.split('@')[0] : '') || 'User';
+                  try {
+                    localStorage.setItem('chocodream_user_cache', JSON.stringify({
+                      name: userName,
+                      email: user.email || '',
+                      uid: user.uid,
+                      timestamp: Date.now()
+                    }));
+                    // Trigger custom event for auth-check.js
+                    document.dispatchEvent(new Event('userLoggedIn'));
+                  } catch (e) {
+                    console.warn('Failed to cache user:', e);
+                  }
+                  handleSuccess();
+                });
+              } catch (err) {
+                console.error("DB error during login:", err);
+                handleSuccess();
+              }
             } else {
               handleSuccess();
             }
